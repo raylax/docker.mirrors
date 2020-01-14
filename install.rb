@@ -4,7 +4,7 @@ IMAGES_DIR = "images"
 DOCKER_HUB_USER = ENV['DOCKER_USERNAME']
 
 def process_file(file)
-  printf "[*] process file [%s]\n", file
+  puts "[*] process file [%s]" % file
   File.open(IMAGES_DIR + "/" + file, "r") do |f|
     f.each_line do |line|
       process_line file, line.strip
@@ -20,22 +20,22 @@ end
 
 def install_images(prefix, image)
   local_image = DOCKER_HUB_USER + "/" + image
-  printf "[*] pulling cached image [%s]\n", local_image
+  puts "[*] pulling cached image [%s]" % local_image
   pulled = system "docker", "pull", local_image
   if pulled
-    printf "[*] local image already exists, skipped\n"
+    puts "[*] local image already exists, skipped"
     return
   end
   remote_image = prefix + "/" + image
-  printf "[*] pulling remote image [%s]\n", remote_image
+  puts "[*] pulling remote image [%s]" % remote_image
   pulled = system "docker", "pull", remote_image
   unless pulled
-    printf "[*] remote image [%s] not found, skipped\n", remote_image
+    puts "[*] remote image [%s] not found, skipped" % remote_image
     return
   end
-  printf "[*] tag remote image [%s] to cached image [%s]\n", remote_image, local_image
+  puts "[*] tag remote image [%s] to cached image [%s]" % [remote_image, local_image]
   system "docker", "tag", remote_image, local_image
-  printf "[*] pushing [%s] to docker hub\n"
+  puts "[*] pushing [%s] to docker hub" % local_image
   system "docker", "push", local_image
 end
 
