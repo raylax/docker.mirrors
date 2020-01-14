@@ -14,7 +14,7 @@ end
 
 def process_line(host, line)
   if line.length > 0
-    line = line.gsub(/\//, "@")
+    line = line.gsub(/\//, "-")
     install_images host, line
   end
 end
