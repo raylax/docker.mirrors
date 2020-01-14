@@ -22,10 +22,10 @@ def install_images(prefix, image)
   local_image = DOCKER_HUB_USER + "/" + image
   puts "[*] pulling cached image [%s]" % local_image
   pulled = system "docker", "pull", local_image, ">", "/dev/null", "2>&1"
-  if pulled
-    puts "[*] local image already exists, skipped"
-    return
-  end
+  #if pulled
+  #  puts "[*] local image already exists, skipped"
+  #  return
+  #end
   remote_image = prefix + "/" + image
   puts "[*] pulling remote image [%s]" % remote_image
   pulled = system "docker", "pull", remote_image, ">", "/dev/null", "2>&1"
@@ -34,7 +34,7 @@ def install_images(prefix, image)
     return
   end
   puts "[*] tag remote image [%s] to cached image [%s]" % [remote_image, local_image]
-  system "docker", "tag", remote_image, local_image
+  system "docker", "commit", "-m='%s'" % "mirror of " + remote_image, remote_image, local_image
   puts "[*] pushing [%s] to docker hub" % local_image
   system "docker", "push", local_image
 end
