@@ -1,9 +1,11 @@
+language: ruby
+
 services: docker
 
 before_install:
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
 
-install:
+script:
   - ruby install.rb
 
 env:
