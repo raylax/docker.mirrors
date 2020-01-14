@@ -30,12 +30,12 @@ def install_images(prefix, image)
   printf "[*] pulling remote image [%s]\n", remote_image
   pulled = system "docker", "pull", remote_image
   unless pulled
-    printf "[*] remote image [%s] not found, skipped", remote_image
+    printf "[*] remote image [%s] not found, skipped\n", remote_image
     return
   end
-  printf "[*] tag remote image [%s] to cached image [%s]", remote_image, local_image
+  printf "[*] tag remote image [%s] to cached image [%s]\n", remote_image, local_image
   system "docker", "tag", remote_image, local_image
-  printf "[*] pushing [%s] to docker hub"
+  printf "[*] pushing [%s] to docker hub\n"
   system "docker", "push", local_image
 end
 
