@@ -14,7 +14,7 @@ end
 
 def process_line(host, line)
   if line.length > 0
-    line = line gsub /\//, "-"
+    line = line.gsub(/\//, "@")
     install_images host, line
   end
 end
@@ -41,7 +41,7 @@ def install_images(prefix, image)
 end
 
 Dir.foreach(IMAGES_DIR) do |file|
-  if file !="." and file !=".."
+  if file != "." and file != ".."
     process_file file
   end
 end
