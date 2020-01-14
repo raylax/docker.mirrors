@@ -14,13 +14,12 @@ end
 
 def process_line(host, line)
   if line.length > 0
-    line = line.gsub(/\//, "-")
     install_images host, line
   end
 end
 
 def install_images(prefix, image)
-  local_image = DOCKER_HUB_USER + "/" + image
+  local_image = DOCKER_HUB_USER + "/" + image.gsub(/\//, "-")
   puts "[*] pulling cached image [%s]" % local_image
   pulled = system "docker", "pull", local_image
   if pulled
