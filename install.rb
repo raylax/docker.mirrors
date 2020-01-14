@@ -21,14 +21,14 @@ end
 def install_images(prefix, image)
   local_image = DOCKER_HUB_USER + "/" + image
   puts "[*] pulling cached image [%s]" % local_image
-  pulled = system "docker", "pull", local_image
+  pulled = system "docker", "pull", local_image, ">", "/dev/null", "2>&1"
   if pulled
     puts "[*] local image already exists, skipped"
     return
   end
   remote_image = prefix + "/" + image
   puts "[*] pulling remote image [%s]" % remote_image
-  pulled = system "docker", "pull", remote_image
+  pulled = system "docker", "pull", remote_image, ">", "/dev/null", "2>&1"
   unless pulled
     puts "[*] remote image [%s] not found, skipped" % remote_image
     return
